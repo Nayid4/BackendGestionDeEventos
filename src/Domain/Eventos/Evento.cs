@@ -11,7 +11,6 @@ namespace Domain.Eventos
 {
     public sealed class Evento : IEntidadGenerica<IdEvento>
     {
-        public new IdEvento Id { get; private set; } = default!;
         public string Titulo { get; private set; } = string.Empty;
         public string Descripcion { get; private set; } = string.Empty;
         public DateOnly Fecha { get; private set; }
@@ -22,20 +21,17 @@ namespace Domain.Eventos
 
         public ICollection<AsistenteDeEvento> Asistentes => _asistentes.ToList();
 
-        public Evento()
+        public Evento() : base()
         {
         }
 
-        public Evento(IdEvento id, string titulo, string descripcion, DateOnly fecha, TimeOnly hora, string lugar)
+        public Evento(IdEvento id, string titulo, string descripcion, DateOnly fecha, TimeOnly hora, string lugar) : base(id)
         {
-            Id = id ?? throw new ArgumentNullException(nameof(id));
             Titulo = titulo ?? throw new ArgumentNullException(nameof(titulo));
             Descripcion = descripcion ?? throw new ArgumentNullException(nameof(descripcion));
             Fecha = fecha;
             Hora = hora;
             Lugar = lugar ?? throw new ArgumentNullException(nameof(lugar));
-            FechaCreacion = DateTime.Now;
-            FechaActualizacion = DateTime.Now;  
         }
 
         public void Actualizar(string titulo, string descripcion, DateOnly fecha, TimeOnly hora, string lugar)

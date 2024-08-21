@@ -16,7 +16,8 @@ namespace Infrastructure.Persistencia.Configuraciones
 
             builder.Property(u => u.Id).HasConversion(
                 usuarioId => usuarioId.Id,
-                valor => new IdUsuario(valor));
+                valor => new IdUsuario(valor))
+                .IsRequired();
 
             builder.Property(u => u.Nombre)
                 .HasMaxLength(50)
