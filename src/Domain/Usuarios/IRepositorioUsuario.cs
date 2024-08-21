@@ -9,5 +9,6 @@ namespace Domain.Usuarios
 {
     public interface IRepositorioUsuario : IRepositorioGenerico<Usuario, IdUsuario>
     {
+        public Task<Usuario?> ListarPorCorreo(string correo);
     }
 }

@@ -12,5 +12,10 @@ namespace Infrastructure.Persistencia.Repositorios
         public RepositorioUsuario(AplicacionDeContextoDB contexto) : base(contexto)
         {
         }
+
+        public async Task<Usuario?> ListarPorCorreo(string correo)
+        {
+            return await _dbSet.FirstOrDefaultAsync(u => u.Correo.Equals(correo));
+        }
     }
 }
