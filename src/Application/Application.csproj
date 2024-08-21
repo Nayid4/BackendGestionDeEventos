@@ -19,9 +19,4 @@
     <ProjectReference Include="..\Domain\Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Usuarios\ListarTodos\" />
-    <Folder Include="Usuarios\Actualizar\" />
-  </ItemGroup>
-
 </Project>
