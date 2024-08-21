@@ -6,14 +6,13 @@ namespace WebAPI.Servicios
     {
         public static IServiceCollection AddPresentation(this IServiceCollection servicios, IConfiguration configuracion)
         {
+            servicios.AddControllers();
+            servicios.AddEndpointsApiExplorer();
+            servicios.AddSwaggerGen();
+            servicios.AddTransient<GlobalExceptionHandlingMiddleware>();
+
             servicios.AddCors(options =>
             {
-
-                servicios.AddControllers();
-                servicios.AddEndpointsApiExplorer();
-                servicios.AddSwaggerGen();
-                servicios.AddTransient<GlobalExceptionHandlingMiddleware>();
-
                 options.AddPolicy("webLocal", policyBuilder =>
                 {
                     policyBuilder.WithOrigins("http://localhost:4200");
