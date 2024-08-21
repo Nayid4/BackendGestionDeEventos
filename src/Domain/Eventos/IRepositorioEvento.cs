@@ -12,5 +12,8 @@ namespace Domain.Eventos
     {
         Task<List<Evento>> ListarTodosLosEventos();
         Task<Evento?> ListarPorIdEvento(IdEvento id);
+        Task<Evento?> ListarPorDatos(DateOnly fecha, TimeOnly HoraInicio, TimeOnly HoraFin, string Lugar);
+        Task<bool> LugarDisponible(DateOnly fecha, TimeOnly horaInicio, TimeOnly horaFin, string lugar);
+        Task<bool> ExisteSolapamiento(DateOnly fecha, TimeOnly horaInicio, TimeOnly horaFin, string lugar);
     }
 }

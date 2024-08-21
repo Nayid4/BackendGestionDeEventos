@@ -19,4 +19,10 @@
     <ProjectReference Include="..\Domain\Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Eventos\ListarPorId\" />
+    <Folder Include="Eventos\Eliminar\" />
+    <Folder Include="Eventos\ListarTodos\" />
+  </ItemGroup>
+
 </Project>

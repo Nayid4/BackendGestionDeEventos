@@ -14,7 +14,8 @@ namespace Domain.Eventos
         public string Titulo { get; private set; } = string.Empty;
         public string Descripcion { get; private set; } = string.Empty;
         public DateOnly Fecha { get; private set; }
-        public TimeOnly Hora { get; private set; }
+        public TimeOnly HoraInicio { get; private set; }
+        public TimeOnly HoraFin { get; private set; }
         public string Lugar { get; private set; } = string.Empty;
 
         private readonly HashSet<AsistenteDeEvento> _asistentes = new();
@@ -25,21 +26,23 @@ namespace Domain.Eventos
         {
         }
 
-        public Evento(IdEvento id, string titulo, string descripcion, DateOnly fecha, TimeOnly hora, string lugar) : base(id)
+        public Evento(IdEvento id, string titulo, string descripcion, DateOnly fecha, TimeOnly horaInicio, TimeOnly horaFin, string lugar) : base(id)
         {
             Titulo = titulo ?? throw new ArgumentNullException(nameof(titulo));
             Descripcion = descripcion ?? throw new ArgumentNullException(nameof(descripcion));
             Fecha = fecha;
-            Hora = hora;
+            HoraInicio = horaInicio;
+            HoraFin = horaFin;
             Lugar = lugar ?? throw new ArgumentNullException(nameof(lugar));
         }
 
-        public void Actualizar(string titulo, string descripcion, DateOnly fecha, TimeOnly hora, string lugar)
+        public void Actualizar(string titulo, string descripcion, DateOnly fecha, TimeOnly horaInicio, TimeOnly horaFin, string lugar)
         {
             Titulo = titulo ?? throw new ArgumentNullException(nameof(titulo));
             Descripcion = descripcion ?? throw new ArgumentNullException(nameof(descripcion));
             Fecha = fecha;
-            Hora = hora;
+            HoraInicio = horaInicio;
+            HoraFin = horaFin;
             Lugar = lugar ?? throw new ArgumentNullException(nameof(lugar));
             FechaActualizacion = DateTime.Now;
         }
