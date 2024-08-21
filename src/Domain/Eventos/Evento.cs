@@ -1,6 +1,7 @@
 ﻿using Domain.AsistentesDeEventos;
 using Domain.Genericos;
 using Domain.Primitivos;
+using Domain.Usuarios;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -77,5 +78,16 @@ namespace Domain.Eventos
 
             _asistentes.Remove(asistente ?? throw new ArgumentNullException(nameof(asistente)));
         }
+
+        public AsistenteDeEvento? ObtenerAsistentePorIdUsuario(IdUsuario idUsuario)
+        {
+            if (idUsuario == null)
+            {
+                throw new ArgumentNullException(nameof(idUsuario));
+            }
+
+            return _asistentes.FirstOrDefault(asistente => asistente.IdUsuario.Equals(idUsuario));
+        }
+
     }
 }
