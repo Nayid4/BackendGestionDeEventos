@@ -20,7 +20,6 @@
 
   <ItemGroup>
     <Folder Include="Persistencia\Configuraciones\" />
-    <Folder Include="Persistencia\Repositorios\" />
   </ItemGroup>
 
 </Project>
