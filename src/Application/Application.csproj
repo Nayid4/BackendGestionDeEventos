@@ -19,4 +19,12 @@
     <ProjectReference Include="..\Domain\Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Usuarios\ListarPorId\" />
+    <Folder Include="Usuarios\Crear\" />
+    <Folder Include="Usuarios\Eliminar\" />
+    <Folder Include="Usuarios\ListarTodos\" />
+    <Folder Include="Usuarios\Actualizar\" />
+  </ItemGroup>
+
 </Project>

@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Application.Datos;
+using Domain.Primitivos;
+using Domain.Usuarios;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,12 +9,14 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.Persistencia
 {
-    public class AplicacionDeContextoDB : DbContext, IAplicacionContextoDb, IUnitOfWork
+    public class AplicacionDeContextoDB : DbContext, IAplicacionDeContextoDB, IUnitOfWork
     {
+        public DbSet<Usuario> Usuarios { get; set; }
 
 
         private readonly IPublisher _publisher;
 
+        
         public AplicacionDeContextoDB(DbContextOptions options, IPublisher publisher) : base(options)
         {
             _publisher = publisher;
@@ -20,7 +25,7 @@ namespace Infrastructure.Persistencia
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.ApplyConfigurationsFromAssembly(typeof(AplicacionContextoDb).Assembly);
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(AplicacionDeContextoDB).Assembly);
         }
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
