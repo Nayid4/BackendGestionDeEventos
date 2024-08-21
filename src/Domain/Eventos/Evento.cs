@@ -28,6 +28,11 @@ namespace Domain.Eventos
 
         public Evento(IdEvento id, string titulo, string descripcion, DateOnly fecha, TimeOnly horaInicio, TimeOnly horaFin, string lugar) : base(id)
         {
+            if (horaInicio >= horaFin)
+            {
+                throw new ArgumentException("La hora de inicio debe ser anterior a la hora de fin.");
+            }
+
             Titulo = titulo ?? throw new ArgumentNullException(nameof(titulo));
             Descripcion = descripcion ?? throw new ArgumentNullException(nameof(descripcion));
             Fecha = fecha;
@@ -38,6 +43,11 @@ namespace Domain.Eventos
 
         public void Actualizar(string titulo, string descripcion, DateOnly fecha, TimeOnly horaInicio, TimeOnly horaFin, string lugar)
         {
+            if (horaInicio >= horaFin)
+            {
+                throw new ArgumentException("La hora de inicio debe ser anterior a la hora de fin.");
+            }
+
             Titulo = titulo ?? throw new ArgumentNullException(nameof(titulo));
             Descripcion = descripcion ?? throw new ArgumentNullException(nameof(descripcion));
             Fecha = fecha;
@@ -45,6 +55,27 @@ namespace Domain.Eventos
             HoraFin = horaFin;
             Lugar = lugar ?? throw new ArgumentNullException(nameof(lugar));
             FechaActualizacion = DateTime.Now;
+        }
+
+
+        public void AgregarAsistente(AsistenteDeEvento asistente)
+        {
+            if (_asistentes.Contains(asistente))
+            {
+                throw new InvalidOperationException("El asistente ya está registrado en el evento.");
+            }
+
+            _asistentes.Add(asistente ?? throw new ArgumentNullException(nameof(asistente)));
+        }
+
+        public void EliminarAsistente(AsistenteDeEvento asistente)
+        {
+            if (!_asistentes.Contains(asistente))
+            {
+                throw new InvalidOperationException("El asistente no está registrado en el evento.");
+            }
+
+            _asistentes.Remove(asistente ?? throw new ArgumentNullException(nameof(asistente)));
         }
     }
 }

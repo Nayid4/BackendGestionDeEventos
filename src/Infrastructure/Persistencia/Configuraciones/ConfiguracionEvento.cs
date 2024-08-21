@@ -30,7 +30,10 @@ namespace Infrastructure.Persistencia.Configuraciones
             builder.Property(e => e.Fecha)
                 .IsRequired();
 
-            builder.Property(e => e.Hora)
+            builder.Property(e => e.HoraInicio)
+                .IsRequired();
+
+            builder.Property(e => e.HoraFin)
                 .IsRequired();
 
             builder.Property(e => e.Lugar)

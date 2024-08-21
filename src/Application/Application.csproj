@@ -21,7 +21,6 @@
 
   <ItemGroup>
     <Folder Include="Eventos\ListarPorId\" />
-    <Folder Include="Eventos\Eliminar\" />
     <Folder Include="Eventos\ListarTodos\" />
   </ItemGroup>
 

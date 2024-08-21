@@ -14,10 +14,6 @@ namespace Infrastructure.Persistencia.Repositorios
         {
         }
 
-        public async Task<Evento?> ListarPorDatos(DateOnly fecha, TimeOnly hora, string lugar)
-        {
-            return await _dbSet.FirstOrDefaultAsync(e => e.Fecha == fecha && e.Hora == hora && e.Lugar == lugar);
-        }
 
         public async Task<Evento?> ListarPorIdEvento(IdEvento id)
         {
@@ -29,18 +25,16 @@ namespace Infrastructure.Persistencia.Repositorios
             return _dbSet.Include(e => e.Asistentes).ToListAsync();
         }
 
-        public async Task<bool> LugarDisponible(DateOnly fecha, string lugar, TimeOnly horaInicio, TimeOnly horaFin)
+        public async Task<bool> LugarDisponible(DateOnly fecha, TimeOnly horaInicio, TimeOnly horaFin, string lugar)
         {
             return !await _dbSet.AnyAsync(e => e.Fecha == fecha && e.Lugar == lugar
-                                               && e.Hora >= horaInicio && e.Hora < horaFin);
+                                               && (horaInicio < e.HoraFin && horaFin > e.HoraInicio));
         }
 
         public async Task<bool> ExisteSolapamiento(DateOnly fecha, TimeOnly horaInicio, TimeOnly horaFin, string lugar)
         {
             return await _dbSet.AnyAsync(e => e.Fecha == fecha && e.Lugar == lugar
-                                              && (horaInicio < e.Hora.AddHours(1) && horaFin > e.Hora));
+                                              && (horaInicio < e.HoraInicio.AddHours(1) && horaFin > e.HoraFin));
         }
-
-
     }
 }
