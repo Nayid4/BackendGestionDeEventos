@@ -7,12 +7,16 @@ using System.Threading.Tasks;
 namespace Application.Eventos.Comun
 {
     public record RespuestaEvento(
+        Guid Id,
         string Titulo,
         string Descripcion,
         DateOnly Fecha,
-        TimeOnly Hora,
+        TimeOnly HoraInicio,
+        TimeOnly HoraFin,
         string Lugar,
-        List<RepuestaAsistente> Asistentes
+        List<RepuestaAsistente> Asistentes,
+        DateTime FechaCreacion,
+        DateTime FechaActualizacion
     );
 
     public record RepuestaAsistente(

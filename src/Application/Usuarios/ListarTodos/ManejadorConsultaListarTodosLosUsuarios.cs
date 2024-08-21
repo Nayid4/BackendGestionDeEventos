@@ -25,7 +25,9 @@ namespace Application.Usuarios.ListarTodos
                     u.Id.Id,
                     u.Nombre,
                     u.Apellido,
-                    u.Correo
+                    u.Correo,
+                    u.FechaCreacion,
+                    u.FechaActualizacion
                 )).ToList();
 
             return lista;

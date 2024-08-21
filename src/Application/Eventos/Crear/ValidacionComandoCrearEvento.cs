@@ -21,7 +21,10 @@ namespace Application.Eventos.Crear
             RuleFor(r => r.Fecha)
                 .NotEmpty();
 
-            RuleFor(r => r.Hora)
+            RuleFor(r => r.HoraInicio)
+                .NotEmpty();
+
+            RuleFor(r => r.HoraFin)
                 .NotEmpty();
 
             RuleFor(r => r.Lugar)

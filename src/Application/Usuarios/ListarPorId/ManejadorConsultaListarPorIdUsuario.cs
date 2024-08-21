@@ -30,7 +30,9 @@ namespace Application.Usuarios.ListarPorId
                 usuario.Id.Id,
                 usuario.Nombre,
                 usuario.Apellido,
-                usuario.Correo
+                usuario.Correo,
+                usuario.FechaCreacion,
+                usuario.FechaActualizacion
             );
 
             return respuestaUsuario;

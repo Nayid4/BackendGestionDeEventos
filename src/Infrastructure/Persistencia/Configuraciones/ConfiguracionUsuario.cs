@@ -30,6 +30,12 @@ namespace Infrastructure.Persistencia.Configuraciones
             builder.Property(u => u.Correo)
                 .HasMaxLength(255)
                 .IsRequired();
+
+            builder.Property(a => a.FechaCreacion)
+                .IsRequired();
+
+            builder.Property(a => a.FechaActualizacion)
+                .IsRequired();
         }
     }
 }

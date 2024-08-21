@@ -20,7 +20,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Eventos\ListarPorId\" />
     <Folder Include="Eventos\ListarTodos\" />
   </ItemGroup>
 

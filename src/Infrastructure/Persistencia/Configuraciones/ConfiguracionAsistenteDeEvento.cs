@@ -30,6 +30,12 @@ namespace Infrastructure.Persistencia.Configuraciones
                 idUsuario => idUsuario.Id,
                 valor => new IdUsuario(valor))
                 .IsRequired();
+
+            builder.Property(a => a.FechaCreacion)
+                .IsRequired();
+
+            builder.Property(a => a.FechaActualizacion)
+                .IsRequired();
         }
     }
 }

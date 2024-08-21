@@ -43,6 +43,12 @@ namespace Infrastructure.Persistencia.Configuraciones
             builder.HasMany(e => e.Asistentes)
                 .WithOne()
                 .HasForeignKey(a => a.IdEvento);
+
+            builder.Property(a => a.FechaCreacion)
+                .IsRequired();
+
+            builder.Property(a => a.FechaActualizacion)
+                .IsRequired();
         }
     }
 }
