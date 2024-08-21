@@ -8,20 +8,18 @@ using System.Threading.Tasks;
 
 namespace Domain.Usuarios
 {
-    public sealed class Usuario : AggregateRoot, IEntidadGenerica<IdUsuario>
+    public sealed class Usuario : IEntidadGenerica<IdUsuario>
     {
-        public IdUsuario Id { get; private set; } = default!;
         public string Nombre { get; private set; } = string.Empty;
         public string Apellido { get; private set; } = string.Empty;
         public string Correo { get; private set; } = string.Empty;
 
-        public Usuario()
+        public Usuario() : base()
         {
         }
 
-        public Usuario(IdUsuario idUsuario, string nombre, string apellido, string correo)
+        public Usuario(IdUsuario idUsuario, string nombre, string apellido, string correo) : base(idUsuario)
         {
-            Id = idUsuario ?? throw new ArgumentNullException(nameof(idUsuario));
             Nombre = nombre ?? throw new ArgumentNullException(nameof(nombre));
             Apellido = apellido ?? throw new ArgumentNullException(nameof(apellido));
             Correo = correo ?? throw new ArgumentNullException(nameof(correo));
@@ -32,6 +30,7 @@ namespace Domain.Usuarios
             Nombre = nombre ?? throw new ArgumentNullException(nameof(nombre));
             Apellido = apellido ?? throw new ArgumentNullException(nameof(apellido));
             Correo = correo ?? throw new ArgumentNullException(nameof(correo));
+            FechaActualizacion = DateTime.Now;
         }
     }
 }
