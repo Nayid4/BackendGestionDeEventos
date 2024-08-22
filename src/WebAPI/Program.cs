@@ -25,9 +25,9 @@ app.UseExceptionHandler("/error");
 
 app.UseHttpsRedirection();
 
-//app.UseCors("webLocal");
+app.UseCors("webLocal");
 
-app.UseCors("webRemota");
+//app.UseCors("webRemota");
 
 app.UseAuthorization();
 

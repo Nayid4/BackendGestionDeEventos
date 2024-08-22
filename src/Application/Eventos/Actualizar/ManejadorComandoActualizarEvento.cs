@@ -71,56 +71,30 @@ namespace Application.Eventos.Actualizar
                 horaFin,
                 comando.Lugar
             );
-
-
             var asistentesActuales = evento.Asistentes.ToList();
 
-            if (comando.Asistentes.Count == 0)
+            var idsNuevosAsistentes = comando.Asistentes.Select(a => new IdUsuario(a.Id)).ToHashSet();
+
+            var asistentesAEliminar = asistentesActuales
+                .Where(asistente => !idsNuevosAsistentes.Contains(asistente.IdUsuario))
+                .ToList();
+
+            foreach (var asistenteAEliminar in asistentesAEliminar)
             {
-                // Eliminar todos los asistentes si la lista de asistentes está vacía
-                foreach (var asistenteActual in asistentesActuales)
-                {
-                    evento.EliminarAsistente(asistenteActual);
-                }
-            }
-            else
-            {
-                // Agregar y eliminar asistentes según corresponda
-                var tareasVerificacion = comando.Asistentes.Select(async asistente =>
-                {
-                    var usuario = await _repositorioUsuario.ListarPorId(new IdUsuario(asistente.Id));
-                    return (asistente, usuario);
-                });
-
-                var resultadosVerificacion = await Task.WhenAll(tareasVerificacion);
-
-                foreach (var (asistente, usuario) in resultadosVerificacion)
-                {
-                    if (usuario is null)
-                    {
-                        return Error.NotFound("Usuario.NoEncontrado", "No se encontró el usuario.");
-                    }
-
-                    if (!asistentesActuales.Any(a => a.Id.Equals(asistente.Id)))
-                    {
-                        evento.AgregarAsistente(new AsistenteDeEvento(
-                            new IdAsistenteDeEvento(Guid.NewGuid()),
-                            evento.Id,
-                            usuario.Id
-                        ));
-                    }
-                }
-
-                // Eliminar asistentes que ya no están en la nueva lista
-                foreach (var asistenteActual in asistentesActuales.ToList())
-                {
-                    if (!comando.Asistentes.Any(a => a.Id.Equals(asistenteActual.Id)))
-                    {
-                        evento.EliminarAsistente(asistenteActual);
-                    }
-                }
+                evento.EliminarAsistente(asistenteAEliminar);
             }
 
+            foreach (var idUsuario in idsNuevosAsistentes)
+            {
+                if (evento.ObtenerAsistentePorIdUsuario(idUsuario) is null)
+                {
+                    evento.AgregarAsistente(new AsistenteDeEvento(
+                        new IdAsistenteDeEvento(Guid.NewGuid()),
+                        evento.Id,
+                        idUsuario
+                    ));
+                }
+            }
 
             _repositorioEvento.Actualizar(evento);
 
