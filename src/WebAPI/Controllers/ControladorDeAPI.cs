@@ -5,8 +5,8 @@ using WebAPI.Comun.Http;
 namespace WebAPI.Controllers
 {
     [ApiController]
-    [EnableCors("webRemota")]
-    //[EnableCors("webLocal")]
+    //[EnableCors("webRemota")]
+    [EnableCors("webLocal")]
     public class ControladorDeAPI : ControllerBase
     {
         protected IActionResult Problem(List<Error> errors)
