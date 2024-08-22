@@ -31,7 +31,7 @@ namespace Application.Eventos.ListarPorRangoDeFecha
                 return Error.Validation("FechaInvalida", "La fecha final no tiene un formato válido.");
             }
 
-            var listaDeEventos = await _repositorioEvento.FiltrarPorFecha(fechaInicio);
+            var listaDeEventos = await _repositorioEvento.FiltrarPorRangoDeFechas(fechaInicio, fechafin);
 
             var listaDeRespuestas = new List<RespuestaEvento>();
 
