@@ -10,6 +10,8 @@ namespace Application.Usuarios.Comun
         Guid Id,
         string Nombre,
         string Apellido,
-        string Correo
+        string Correo,
+        DateTime FechaCreacion,
+        DateTime FechaActualizacion
     );
 }

@@ -1,4 +1,6 @@
 ﻿using Application.Datos;
+using Domain.AsistentesDeEventos;
+using Domain.Eventos;
 using Domain.Primitivos;
 using Domain.Usuarios;
 using Infrastructure.Persistencia;
@@ -32,7 +34,10 @@ namespace Infrastructure.Servicios
             servicios.AddScoped<IUnitOfWork>(sp =>
                 sp.GetRequiredService<AplicacionDeContextoDB>());
 
+
             servicios.AddScoped<IRepositorioUsuario, RepositorioUsuario>();
+            servicios.AddScoped<IRepositorioAsistenteDeEvento, RepositorioAsistenteDeEvento>();
+            servicios.AddScoped<IRepositorioEvento, RepositorioEvento>();
 
             return servicios;
         }

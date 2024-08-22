@@ -20,6 +20,7 @@ namespace Application.Usuarios.Crear
 
             RuleFor(r => r.Correo)
                 .MaximumLength(255)
+                .EmailAddress()
                 .NotEmpty();
         }
     }

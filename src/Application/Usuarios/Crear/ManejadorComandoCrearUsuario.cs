@@ -21,7 +21,7 @@ namespace Application.Usuarios.Crear
 
         public async Task<ErrorOr<Unit>> Handle(ComandoCrearUsuario comando, CancellationToken cancellationToken)
         {
-            if (await _repositorioUsuario.ListarPorCorreo(comando.Correo) is not Usuario usuario)
+            if (await _repositorioUsuario.ListarPorCorreo(comando.Correo) is Usuario usuario)
             {
                 return Error.Validation("Usuario.Encontrado", "Ya existe un usuario con ese correo.");
             }
