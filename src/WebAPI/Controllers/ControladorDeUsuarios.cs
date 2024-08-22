@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 namespace WebAPI.Controllers
 {
     [Route("usuarios")]
+    [AllowAnonymous]
     public class ControladorDeUsuarios : ControladorDeAPI
     {
         private readonly ISender _mediator;

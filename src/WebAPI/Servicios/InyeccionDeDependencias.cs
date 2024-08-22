@@ -23,7 +23,7 @@ namespace WebAPI.Servicios
 
                 options.AddPolicy("webRemota", policyBuilder =>
                 {
-                    policyBuilder.WithOrigins("https://frontend-gestion-de-eventos.vercel.app/")
+                    policyBuilder.WithOrigins("https://frontend-gestion-de-eventos.vercel.app")
                                  .AllowAnyHeader()
                                  .AllowAnyMethod()
                                  .AllowCredentials();
