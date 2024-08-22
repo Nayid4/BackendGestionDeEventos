@@ -19,6 +19,7 @@ using Microsoft.AspNetCore.Authorization;
 namespace WebAPI.Controllers
 {
     [Route("eventos")]
+    [AllowAnonymous]
     public class ControladorDeEventos : ControladorDeAPI
     {
         private readonly ISender _mediator;
