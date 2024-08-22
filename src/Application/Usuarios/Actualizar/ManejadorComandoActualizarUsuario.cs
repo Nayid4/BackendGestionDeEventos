@@ -26,6 +26,11 @@ namespace Application.Usuarios.Actualizar
                 return Error.NotFound("Usuario.NoEncontrado", "Usuario no encontrado.");
             }
 
+            if (await _repositorioUsuario.ListarPorCorreo(comando.Correo) is Usuario usuario2 && !usuario2.Id.Equals(usuario.Id))
+            {
+                return Error.Validation("Usuario.Encontrado", "Ya existe un usuario con ese correo.");
+            }
+
             usuario.Actualizar(
                 comando.Nombre,
                 comando.Apellido,

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Domain.Genericos
 {
     public interface IRepositorioGenerico<T, TId>
-        where T : class, IEntidadGenerica<TId>
+        where T : IEntidadGenerica<TId>
         where TId : IIdGenerico
     {
         Task<List<T>> ListarTodos();

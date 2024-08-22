@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace Infrastructure.Persistencia.Repositorios
 {
     public class RepositorioGenerico<T, TId> : IRepositorioGenerico<T, TId>
-        where T : class, IEntidadGenerica<TId>
+        where T : IEntidadGenerica<TId>
         where TId : IIdGenerico
     {
 

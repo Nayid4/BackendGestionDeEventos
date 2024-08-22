@@ -74,7 +74,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(Guid id)
+        public async Task<IActionResult> Eliminar(Guid id)
         {
             var resultadoDeEliminar = await _mediator.Send(new ComandoEliminarUsuario(id));
 
