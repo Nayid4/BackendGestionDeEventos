@@ -3,7 +3,11 @@ using Application.Eventos.AgregarAsistente;
 using Application.Eventos.Crear;
 using Application.Eventos.Eliminar;
 using Application.Eventos.EliminarAsistente;
+using Application.Eventos.ListarPorCategoria;
+using Application.Eventos.ListarPorFecha;
 using Application.Eventos.ListarPorId;
+using Application.Eventos.ListarPorRangoDeFecha;
+using Application.Eventos.ListarProximos;
 using Application.Eventos.ListarTodos;
 using Application.Usuarios.Actualizar;
 using Application.Usuarios.Crear;
@@ -108,6 +112,50 @@ namespace WebAPI.Controllers
 
             return resultadoDeEliminar.Match(
                 eventoId => NoContent(),
+                errores => Problem(errores)
+            );
+        }
+
+        [HttpGet("listar-por-fecha/{fecha}")]
+        public async Task<IActionResult> ListarPorFecha(string fecha)
+        {
+            var resultadoDeListarPorFecha = await _mediator.Send(new ConsultaListarPorFechaEvento(fecha));
+
+            return resultadoDeListarPorFecha.Match(
+                eventoId => Ok(eventoId),
+                errores => Problem(errores)
+            );
+        }
+
+        [HttpPost("listar-por-rango-de-fecha")]
+        public async Task<IActionResult> ListarPorRangoDeFecha([FromBody] ConsultaListarPorRangoDeFechaEvento consulta)
+        {
+            var resultadoDeListarPorRangoDeFecha = await _mediator.Send(consulta);
+
+            return resultadoDeListarPorRangoDeFecha.Match(
+                eventoId => Ok(eventoId),
+                errores => Problem(errores)
+            );
+        }
+
+        [HttpGet("listar-por-categoria/{categoria}")]
+        public async Task<IActionResult> ListarPorCategoria(string categoria)
+        {
+            var resultadoDeListarPorcategoria = await _mediator.Send(new ConsultaListarPorCategoriaEvento(categoria));
+
+            return resultadoDeListarPorcategoria.Match(
+                eventoId => Ok(eventoId),
+                errores => Problem(errores)
+            );
+        }
+
+        [HttpGet("listar-proximos-eventos")]
+        public async Task<IActionResult> ListarProximosEventos()
+        {
+            var resultadosDeListarProximosEventos = await _mediator.Send(new ConsultaListarProximosEventos());
+
+            return resultadosDeListarProximosEventos.Match(
+                eventos => Ok(eventos),
                 errores => Problem(errores)
             );
         }
