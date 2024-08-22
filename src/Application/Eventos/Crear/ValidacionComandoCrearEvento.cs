@@ -14,18 +14,28 @@ namespace Application.Eventos.Crear
                 .MaximumLength(50)
                 .NotEmpty();
 
+            RuleFor(r => r.Categoria)
+                .MaximumLength(50)
+                .NotEmpty();
+
             RuleFor(r => r.Descripcion)
                 .MaximumLength(50)
                 .NotEmpty();
 
             RuleFor(r => r.Fecha)
-                .NotEmpty();
+                .NotEmpty()
+                .Must(fecha => DateTime.TryParse(fecha, out _))
+                .WithMessage("La fecha debe tener un formato válido.");
 
             RuleFor(r => r.HoraInicio)
-                .NotEmpty();
+                .NotEmpty()
+                .Must(hora => TimeSpan.TryParse(hora, out _))
+                .WithMessage("La hora de inicio debe tener un formato válido.");
 
             RuleFor(r => r.HoraFin)
-                .NotEmpty();
+                .NotEmpty()
+                .Must(hora => TimeSpan.TryParse(hora, out _))
+                .WithMessage("La hora de fin debe tener un formato válido.");
 
             RuleFor(r => r.Lugar)
                 .MaximumLength(50)

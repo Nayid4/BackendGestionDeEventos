@@ -54,6 +54,7 @@ namespace Application.Eventos.ListarPorId
             var respuestaEvento = new RespuestaEvento(
                 evento.Id.Id,
                 evento.Titulo,
+                evento.Categoria,
                 evento.Descripcion,
                 evento.Fecha,
                 evento.HoraInicio,

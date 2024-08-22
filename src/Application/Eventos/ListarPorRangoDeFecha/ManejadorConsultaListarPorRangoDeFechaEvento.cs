@@ -7,22 +7,31 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Eventos.ListarTodos
+namespace Application.Eventos.ListarPorRangoDeFecha
 {
-    public sealed class ManejadorConsultaListarTodosLosEventos : IRequestHandler<ConsultaListarTodosLosEventos, ErrorOr<IReadOnlyList<RespuestaEvento>>>
+    public sealed class ManejadorConsultaListarPorRangoDeFechaEvento : IRequestHandler<ConsultaListarPorRangoDeFechaEvento, ErrorOr<IReadOnlyList<RespuestaEvento>>>
     {
         private readonly IRepositorioEvento _repositorioEvento;
         private readonly IRepositorioUsuario _repositorioUsuario;
 
-        public ManejadorConsultaListarTodosLosEventos(IRepositorioEvento repositorioEvento, IRepositorioUsuario repositorioUsuario)
+        public ManejadorConsultaListarPorRangoDeFechaEvento(IRepositorioEvento repositorioEvento, IRepositorioUsuario repositorioUsuario)
         {
             _repositorioEvento = repositorioEvento ?? throw new ArgumentNullException(nameof(repositorioEvento));
             _repositorioUsuario = repositorioUsuario ?? throw new ArgumentNullException(nameof(repositorioUsuario));
         }
-
-        public async Task<ErrorOr<IReadOnlyList<RespuestaEvento>>> Handle(ConsultaListarTodosLosEventos consulta, CancellationToken cancellationToken)
+        public async Task<ErrorOr<IReadOnlyList<RespuestaEvento>>> Handle(ConsultaListarPorRangoDeFechaEvento consulta, CancellationToken cancellationToken)
         {
-            var listaDeEventos = await _repositorioEvento.ListarTodosLosEventos();
+            if (!DateTime.TryParse(consulta.FechaInicio, out var fechaInicio))
+            {
+                return Error.Validation("FechaInvalida", "La fecha de inicio no tiene un formato válido.");
+            }
+
+            if (!DateTime.TryParse(consulta.FechaFin, out var fechafin))
+            {
+                return Error.Validation("FechaInvalida", "La fecha final no tiene un formato válido.");
+            }
+
+            var listaDeEventos = await _repositorioEvento.FiltrarPorFecha(fechaInicio);
 
             var listaDeRespuestas = new List<RespuestaEvento>();
 

@@ -1,4 +1,5 @@
 ﻿using Application.Eventos.Comun;
+using Application.Usuarios.Comun;
 using Domain.Eventos;
 using Domain.Usuarios;
 using System;
@@ -7,22 +8,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Eventos.ListarTodos
+namespace Application.Eventos.ListarProximos
 {
-    public sealed class ManejadorConsultaListarTodosLosEventos : IRequestHandler<ConsultaListarTodosLosEventos, ErrorOr<IReadOnlyList<RespuestaEvento>>>
+    public sealed class ManejadorConsultaListarProximosEventos : IRequestHandler<ConsultaListarProximosEventos, ErrorOr<IReadOnlyList<RespuestaEvento>>>
     {
         private readonly IRepositorioEvento _repositorioEvento;
         private readonly IRepositorioUsuario _repositorioUsuario;
 
-        public ManejadorConsultaListarTodosLosEventos(IRepositorioEvento repositorioEvento, IRepositorioUsuario repositorioUsuario)
+        public ManejadorConsultaListarProximosEventos(IRepositorioEvento repositorioEvento, IRepositorioUsuario repositorioUsuario)
         {
             _repositorioEvento = repositorioEvento ?? throw new ArgumentNullException(nameof(repositorioEvento));
             _repositorioUsuario = repositorioUsuario ?? throw new ArgumentNullException(nameof(repositorioUsuario));
         }
-
-        public async Task<ErrorOr<IReadOnlyList<RespuestaEvento>>> Handle(ConsultaListarTodosLosEventos consulta, CancellationToken cancellationToken)
+        public async Task<ErrorOr<IReadOnlyList<RespuestaEvento>>> Handle(ConsultaListarProximosEventos request, CancellationToken cancellationToken)
         {
-            var listaDeEventos = await _repositorioEvento.ListarTodosLosEventos();
+            var listaDeEventos = await _repositorioEvento.ObtenerEventosProximos();
 
             var listaDeRespuestas = new List<RespuestaEvento>();
 

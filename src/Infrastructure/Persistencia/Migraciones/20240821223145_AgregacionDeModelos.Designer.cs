@@ -4,6 +4,7 @@ using Infrastructure.Persistencia;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Persistencia.Migraciones
 {
     [DbContext(typeof(AplicacionDeContextoDB))]
-    partial class AplicacionDeContextoDBModelSnapshot : ModelSnapshot
+    [Migration("20240821223145_AgregacionDeModelos")]
+    partial class AgregacionDeModelos
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -51,18 +54,13 @@ namespace Infrastructure.Persistencia.Migraciones
                     b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Categoria")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
                     b.Property<string>("Descripcion")
                         .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<DateTime>("Fecha")
-                        .HasColumnType("datetime2");
+                    b.Property<DateOnly>("Fecha")
+                        .HasColumnType("date");
 
                     b.Property<DateTime>("FechaActualizacion")
                         .HasColumnType("datetime2");
@@ -70,10 +68,10 @@ namespace Infrastructure.Persistencia.Migraciones
                     b.Property<DateTime>("FechaCreacion")
                         .HasColumnType("datetime2");
 
-                    b.Property<TimeSpan>("HoraFin")
+                    b.Property<TimeOnly>("HoraFin")
                         .HasColumnType("time");
 
-                    b.Property<TimeSpan>("HoraInicio")
+                    b.Property<TimeOnly>("HoraInicio")
                         .HasColumnType("time");
 
                     b.Property<string>("Lugar")

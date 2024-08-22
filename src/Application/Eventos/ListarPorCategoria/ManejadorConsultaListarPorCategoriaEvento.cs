@@ -7,22 +7,22 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Eventos.ListarTodos
+namespace Application.Eventos.ListarPorCategoria
 {
-    public sealed class ManejadorConsultaListarTodosLosEventos : IRequestHandler<ConsultaListarTodosLosEventos, ErrorOr<IReadOnlyList<RespuestaEvento>>>
+    public sealed class ManejadorConsultaListarPorCategoriaEvento : IRequestHandler<ConsultaListarPorCategoriaEvento, ErrorOr<IReadOnlyList<RespuestaEvento>>>
     {
         private readonly IRepositorioEvento _repositorioEvento;
         private readonly IRepositorioUsuario _repositorioUsuario;
 
-        public ManejadorConsultaListarTodosLosEventos(IRepositorioEvento repositorioEvento, IRepositorioUsuario repositorioUsuario)
+        public ManejadorConsultaListarPorCategoriaEvento(IRepositorioEvento repositorioEvento, IRepositorioUsuario repositorioUsuario)
         {
             _repositorioEvento = repositorioEvento ?? throw new ArgumentNullException(nameof(repositorioEvento));
             _repositorioUsuario = repositorioUsuario ?? throw new ArgumentNullException(nameof(repositorioUsuario));
         }
 
-        public async Task<ErrorOr<IReadOnlyList<RespuestaEvento>>> Handle(ConsultaListarTodosLosEventos consulta, CancellationToken cancellationToken)
+        public async Task<ErrorOr<IReadOnlyList<RespuestaEvento>>> Handle(ConsultaListarPorCategoriaEvento consulta, CancellationToken cancellationToken)
         {
-            var listaDeEventos = await _repositorioEvento.ListarTodosLosEventos();
+            var listaDeEventos = await _repositorioEvento.FiltrarPorCategoria(consulta.Categoria);
 
             var listaDeRespuestas = new List<RespuestaEvento>();
 

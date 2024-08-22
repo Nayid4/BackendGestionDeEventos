@@ -25,17 +25,33 @@ namespace Application.Eventos.Crear
 
         public async Task<ErrorOr<Unit>> Handle(ComandoCrearEvento comando, CancellationToken cancellationToken)
         {
-            if (comando.HoraInicio >= comando.HoraFin)
+            if (!DateTime.TryParse(comando.Fecha, out var fecha))
+            {
+                return Error.Validation("FechaInvalida", "La fecha no tiene un formato válido.");
+            }
+
+            // Conversión de Horas
+            if (!TimeSpan.TryParse(comando.HoraInicio, out var horaInicio))
+            {
+                return Error.Validation("HoraInvalida", "La hora de inicio no tiene un formato válido.");
+            }
+
+            if (!TimeSpan.TryParse(comando.HoraFin, out var horaFin))
+            {
+                return Error.Validation("HoraInvalida", "La hora de fin no tiene un formato válido.");
+            }
+
+            if (horaInicio >= horaFin)
             {
                 return Error.Validation("HoraInvalida", "La hora de inicio debe ser anterior a la hora de fin.");
             }
 
-            if (!await _repositorioEvento.LugarDisponible(comando.Fecha, comando.HoraInicio, comando.HoraFin, comando.Lugar))
+            if (!await _repositorioEvento.LugarDisponible(fecha, horaInicio, horaFin, comando.Lugar))
             {
                 return Error.Conflict("EventoConflicto", "Ya existe un evento programado en el mismo lugar, fecha y hora.");
             }
 
-            if (await _repositorioEvento.ExisteSolapamiento(comando.Fecha, comando.HoraInicio, comando.HoraFin, comando.Lugar))
+            if (await _repositorioEvento.ExisteSolapamiento(fecha, horaInicio,horaFin, comando.Lugar))
             {
                 return Error.Conflict("EventoSolapamiento", "El evento se solapa con otro evento ya existente.");
             }
@@ -43,10 +59,11 @@ namespace Application.Eventos.Crear
             var evento = new Evento(
                 new IdEvento(Guid.NewGuid()),
                 comando.Titulo,
+                comando.Categoria,
                 comando.Descripcion,
-                comando.Fecha,
-                comando.HoraInicio,
-                comando.HoraFin,
+                fecha,
+                horaInicio,
+                horaFin,
                 comando.Lugar
             );
 

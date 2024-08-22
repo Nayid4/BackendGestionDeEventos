@@ -23,6 +23,10 @@ namespace Infrastructure.Persistencia.Configuraciones
                 .HasMaxLength(50)
                 .IsRequired();
 
+            builder.Property(e => e.Categoria)
+                .HasMaxLength(50)
+                .IsRequired();
+
             builder.Property(e => e.Descripcion)
                 .HasMaxLength(255)
                 .IsRequired();

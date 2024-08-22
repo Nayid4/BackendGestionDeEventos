@@ -34,7 +34,11 @@ namespace Application.Eventos.EliminarAsistente
             }
 
 
-            evento.AgregarAsistente(asistente);
+            evento.EliminarAsistente(asistente);
+
+            _repositorioEvento.Actualizar(evento);
+
+            await _unitOfWork.SaveChangesAsync(cancellationToken);
 
             return Unit.Value;
         }

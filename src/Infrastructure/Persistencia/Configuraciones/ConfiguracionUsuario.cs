@@ -31,6 +31,9 @@ namespace Infrastructure.Persistencia.Configuraciones
                 .HasMaxLength(255)
                 .IsRequired();
 
+            builder.HasIndex(u => u.Correo)
+                .IsUnique();
+
             builder.Property(a => a.FechaCreacion)
                 .IsRequired();
 

@@ -10,10 +10,11 @@ namespace Application.Eventos.Actualizar
     public record ComandoActualizarEvento(
         Guid Id,
         string Titulo,
+        string Categoria,
         string Descripcion,
-        DateOnly Fecha,
-        TimeOnly HoraInicio,
-        TimeOnly HoraFin,
+        string Fecha,
+        string HoraInicio,
+        string HoraFin,
         string Lugar,
         List<ComandoAsistente> Asistentes
     ) : IRequest<ErrorOr<Unit>>;

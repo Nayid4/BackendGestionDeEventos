@@ -9,10 +9,11 @@ namespace Application.Eventos.Crear
 {
     public record ComandoCrearEvento(
         string Titulo,
+        string Categoria,
         string Descripcion,
-        DateOnly Fecha,
-        TimeOnly HoraInicio,
-        TimeOnly HoraFin,
+        string Fecha,
+        string HoraInicio,
+        string HoraFin,
         string Lugar,
         List<ComandoAsistente> Asistentes
     ): IRequest<ErrorOr<Unit>>;

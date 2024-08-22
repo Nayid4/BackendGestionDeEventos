@@ -13,10 +13,11 @@ namespace Domain.Eventos
     public sealed class Evento : IEntidadGenerica<IdEvento>
     {
         public string Titulo { get; private set; } = string.Empty;
+        public string Categoria { get; private set; } = string.Empty;
         public string Descripcion { get; private set; } = string.Empty;
-        public DateOnly Fecha { get; private set; }
-        public TimeOnly HoraInicio { get; private set; }
-        public TimeOnly HoraFin { get; private set; }
+        public DateTime Fecha { get; private set; }
+        public TimeSpan HoraInicio { get; private set; }
+        public TimeSpan HoraFin { get; private set; }
         public string Lugar { get; private set; } = string.Empty;
 
         private readonly HashSet<AsistenteDeEvento> _asistentes = new();
@@ -27,7 +28,7 @@ namespace Domain.Eventos
         {
         }
 
-        public Evento(IdEvento id, string titulo, string descripcion, DateOnly fecha, TimeOnly horaInicio, TimeOnly horaFin, string lugar) : base(id)
+        public Evento(IdEvento id, string titulo, string categoria, string descripcion, DateTime fecha, TimeSpan horaInicio, TimeSpan horaFin, string lugar) : base(id)
         {
             if (horaInicio >= horaFin)
             {
@@ -35,6 +36,7 @@ namespace Domain.Eventos
             }
 
             Titulo = titulo ?? throw new ArgumentNullException(nameof(titulo));
+            Categoria = categoria ?? throw new ArgumentNullException(nameof(categoria));
             Descripcion = descripcion ?? throw new ArgumentNullException(nameof(descripcion));
             Fecha = fecha;
             HoraInicio = horaInicio;
@@ -42,7 +44,7 @@ namespace Domain.Eventos
             Lugar = lugar ?? throw new ArgumentNullException(nameof(lugar));
         }
 
-        public void Actualizar(string titulo, string descripcion, DateOnly fecha, TimeOnly horaInicio, TimeOnly horaFin, string lugar)
+        public void Actualizar(string titulo, string categoria,string descripcion, DateTime fecha, TimeSpan horaInicio, TimeSpan horaFin, string lugar)
         {
             if (horaInicio >= horaFin)
             {
@@ -50,6 +52,7 @@ namespace Domain.Eventos
             }
 
             Titulo = titulo ?? throw new ArgumentNullException(nameof(titulo));
+            Categoria = categoria ?? throw new ArgumentNullException(nameof(categoria));
             Descripcion = descripcion ?? throw new ArgumentNullException(nameof(descripcion));
             Fecha = fecha;
             HoraInicio = horaInicio;
@@ -87,6 +90,12 @@ namespace Domain.Eventos
             }
 
             return _asistentes.FirstOrDefault(asistente => asistente.IdUsuario.Equals(idUsuario));
+        }
+
+        public void EliminarTodosLosAsistente()
+        {
+
+            _asistentes.Clear();
         }
 
     }

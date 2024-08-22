@@ -1,28 +1,34 @@
 ﻿using Application.Eventos.Comun;
 using Domain.Eventos;
+using Domain.Primitivos;
 using Domain.Usuarios;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
-namespace Application.Eventos.ListarTodos
+namespace Application.Eventos.ListarPorFecha
 {
-    public sealed class ManejadorConsultaListarTodosLosEventos : IRequestHandler<ConsultaListarTodosLosEventos, ErrorOr<IReadOnlyList<RespuestaEvento>>>
+    public sealed class ManejadorConsultaListarPorFechaEvento : IRequestHandler<ConsultaListarPorFechaEvento, ErrorOr<IReadOnlyList<RespuestaEvento>>>
     {
         private readonly IRepositorioEvento _repositorioEvento;
         private readonly IRepositorioUsuario _repositorioUsuario;
 
-        public ManejadorConsultaListarTodosLosEventos(IRepositorioEvento repositorioEvento, IRepositorioUsuario repositorioUsuario)
+        public ManejadorConsultaListarPorFechaEvento(IRepositorioEvento repositorioEvento, IRepositorioUsuario repositorioUsuario)
         {
             _repositorioEvento = repositorioEvento ?? throw new ArgumentNullException(nameof(repositorioEvento));
             _repositorioUsuario = repositorioUsuario ?? throw new ArgumentNullException(nameof(repositorioUsuario));
         }
-
-        public async Task<ErrorOr<IReadOnlyList<RespuestaEvento>>> Handle(ConsultaListarTodosLosEventos consulta, CancellationToken cancellationToken)
+        public async Task<ErrorOr<IReadOnlyList<RespuestaEvento>>> Handle(ConsultaListarPorFechaEvento consulta, CancellationToken cancellationToken)
         {
-            var listaDeEventos = await _repositorioEvento.ListarTodosLosEventos();
+            if (!DateTime.TryParse(consulta.Fecha, out var fecha))
+            {
+                return Error.Validation("FechaInvalida", "La fecha no tiene un formato válido.");
+            }
+
+            var listaDeEventos = await _repositorioEvento.FiltrarPorFecha(fecha);
 
             var listaDeRespuestas = new List<RespuestaEvento>();
 
